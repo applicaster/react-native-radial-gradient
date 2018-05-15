@@ -1,31 +1,36 @@
-
-buildscript {
-    repositories {
-        jcenter()
-        mavenCentral()
-        maven {
-            url 'https://maven.google.com/'
-            name 'Google'
-        }
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
-    }
-}
-
 apply plugin: 'com.android.library'
 
 def _ext = rootProject.ext;
 def _reactNativeVersion = _ext.has('reactNative') ? _ext.reactNative : '+';
 
-android {
-    compileSdkVersion 23
-    buildToolsVersion '26.0.2'
+repositories {
+    mavenCentral()
+    google()
+    maven {
+        url "https://jitpack.io"
+    }
+}
 
+buildscript {
+    repositories {
+        jcenter()
+        google()
+        mavenCentral()
+        maven {
+            url "https://jitpack.io"
+        }
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.1.0'
+    }
+}
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 22
+        minSdkVersion 17
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
     }
@@ -34,32 +39,20 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             consumerProguardFiles 'proguard-rules.pro'
-
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             consumerProguardFiles 'proguard-rules.pro'
-
         }
     }
     lintOptions {
         abortOnError false
     }
-}
-
-allprojects {
-    repositories {
-        mavenCentral()
-        jcenter()
-        maven {
-            url 'https://maven.google.com/'
-            name 'Google'
-        }
+    productFlavors {
     }
 }
 
 dependencies {
     provided "com.facebook.react:react-native:${_reactNativeVersion}"
 }
-  
